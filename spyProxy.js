@@ -12,6 +12,12 @@ function isPlay(target, self) {
   return (target === states.PLAY && self === states.PLAY);
 }
 
+function reset()
+{
+  saving=true;
+  saves=[];
+  alreadyOneNormal=false;
+}
 var saving=true;
 var saves=[];
 var lastTargetClient;
@@ -81,7 +87,7 @@ server.on('login', function(client) {
     });
 
     client.on('end', function() {
-      alreadyOneNormal=false;
+      reset();
       endedClient = true;
       if(!endedTargetClient) {
         try {
@@ -93,7 +99,7 @@ server.on('login', function(client) {
     });
 
     targetClient.on('end', function() {
-      alreadyOneNormal=false;
+      reset();
       endedTargetClient = true;
       if(!endedClient) {
         client.end("End");
@@ -101,7 +107,7 @@ server.on('login', function(client) {
     });
 
     client.on('error', function() {
-      alreadyOneNormal=false;
+      reset();
       endedClient = true;
       if(!endedTargetClient) {
         targetClient.end("Error");
@@ -109,7 +115,7 @@ server.on('login', function(client) {
     });
 
     targetClient.on('error', function() {
-      alreadyOneNormal=false;
+      reset();
       endedTargetClient = true;
       if(!endedClient) {
         client.end("Error");

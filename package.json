@@ -1,0 +1,26 @@
+{
+  "name": "minespy",
+  "version": "0.0.0",
+  "description": "Spy everybody with your minecraft proxy",
+  "main": "spyProxy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rom1504/minespy.git"
+  },
+  "dependencies" : {
+    "minecraft-protocol": "git://github.com/rom1504/node-minecraft-protocol.git#keepAliveOption"
+  },
+  "keywords": [
+    "minecraft",
+    "proxy",
+    "spy"
+  ],
+  "author": "Romain Beaumont <romain.rom1@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rom1504/minespy/issues"
+  }
+}

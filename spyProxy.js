@@ -43,6 +43,7 @@ server.on('login', function(client) {
 
     setTimeout(function(){
       saves.forEach(function(save){
+        saving=false;
         client.writeRaw(save);
       })
     },100);

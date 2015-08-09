@@ -47,35 +47,41 @@ server.on('login', function(client) {
       })
     },100);
 
-    client.on('raw', function(buffer, state) {
+    client.on('raw', f);
+    function f(buffer, state) {
       if(isPlay(targetClient.state, state)) {
         targetClient.writeRaw(buffer);
       }
-    });
+    }
 
-      targetClient.on('raw', function(buffer, state) {
-        if(isPlay(client.state, state)) {
-          client.writeRaw(buffer);
-        }
-      });
+      targetClient.on('raw', g);
+    function g(buffer, state) {
+      if(isPlay(client.state, state)) {
+        client.writeRaw(buffer);
+      }
+    }
 
 
 
     client.on('end', function() {
+      client.removeListener('raw',g);
       endedClient = true;
     });
 
     targetClient.on('end', function() {
+      targetClient.removeListener('raw',f);
       if(!endedClient) {
         client.end("End");
       }
     });
 
     client.on('error', function() {
+      client.removeListener('raw',g);
       endedClient = true;
     });
 
     targetClient.on('error', function() {
+      targetClient.removeListener('raw',f);
       if(!endedClient) {
         client.end("Error");
       }

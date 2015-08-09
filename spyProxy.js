@@ -39,6 +39,7 @@ server.on('login', function(client) {
   function specialClient() {
 
     var targetClient=lastTargetClient;
+    var endedClient = false;
 
     setTimeout(function(){
       saves.forEach(function(save){
@@ -57,6 +58,28 @@ server.on('login', function(client) {
           client.writeRaw(buffer);
         }
       });
+
+
+
+    client.on('end', function() {
+      endedClient = true;
+    });
+
+    targetClient.on('end', function() {
+      if(!endedClient) {
+        client.end("End");
+      }
+    });
+
+    client.on('error', function() {
+      endedClient = true;
+    });
+
+    targetClient.on('error', function() {
+      if(!endedClient) {
+        client.end("Error");
+      }
+    });
 
 
   }
